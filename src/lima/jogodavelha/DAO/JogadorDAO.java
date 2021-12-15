@@ -21,16 +21,7 @@ public class JogadorDAO implements JogoDaVelhaDAO {
 	public static final File ARQUIVO = new File(JogadorDAO.DIRETORIO, "jogo.txt");
 
 	public synchronized void cadastarJogador(Jogador jogador) throws JogoDaVelhaExceptions {
-		try {
-		if (JogadorDAO.ARQUIVO.exists() == false) {
-			if (JogadorDAO.DIRETORIO.exists() == false) {
-				JogadorDAO.DIRETORIO.mkdir();
-			}
-			JogadorDAO.ARQUIVO.createNewFile();
-		}
-		} catch (IOException e) {
-			throw new JogoDaVelhaExceptions("Não foi possivel criar um novo arquivo no sistema", e);
-		}
+		this.criarBaseDados();
 		
 		try (Writer out = new FileWriter(JogadorDAO.ARQUIVO, true);
 				PrintWriter print = new PrintWriter(out)) {
@@ -46,10 +37,10 @@ public class JogadorDAO implements JogoDaVelhaDAO {
 		}
 	}
 	
-	public synchronized static List<Jogador> listarJogadores() throws JogoDaVelhaExceptions {
-		if (JogadorDAO.ARQUIVO.exists() == false) {
-			throw new JogoDaVelhaExceptions("Base de dados inexistente");
-		}
+	@Override
+	public synchronized List<Jogador> listarJogadores() throws JogoDaVelhaExceptions {
+		this.criarBaseDados();
+		
 		List<Jogador> lista = new ArrayList<>();
 		try (Reader in = new FileReader(JogadorDAO.ARQUIVO);
 				BufferedReader buffer = new BufferedReader(in)) {
@@ -65,7 +56,40 @@ public class JogadorDAO implements JogoDaVelhaDAO {
 		return lista;
 	}
 	
-	public static void main(String[] args) throws JogoDaVelhaExceptions {
-		System.out.println(JogadorDAO.listarJogadores());
+	@Override
+	public synchronized Jogador pesquisarJogador(String nome) throws JogoDaVelhaExceptions {
+		this.criarBaseDados();
+		
+		Jogador jogador = null;
+		try (Reader in = new FileReader(JogadorDAO.ARQUIVO);
+				BufferedReader buffer = new BufferedReader(in)) {
+			String line = null;
+			String[] tokens = null;
+			String n = null;
+			while ((line = buffer.readLine()) != null) {
+				tokens = line.split(";");
+				n = tokens[0];
+				if (n.equals(nome) == true) {
+					jogador = new Jogador(n, Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]));
+					break;
+				}
+			}
+		} catch (IOException e) {
+			throw new JogoDaVelhaExceptions("Não foi possível ler a base de dados", e);
+		}
+		return jogador;
+	}
+	
+	private synchronized void criarBaseDados() throws JogoDaVelhaExceptions {
+		try {
+			if (JogadorDAO.ARQUIVO.exists() == false) {
+				if (JogadorDAO.DIRETORIO.exists() == false) {
+					JogadorDAO.DIRETORIO.mkdir();
+				}
+				JogadorDAO.ARQUIVO.createNewFile();
+			}
+		} catch (IOException e) {
+			throw new JogoDaVelhaExceptions("Não foi possivel criar um novo arquivo no sistema", e);
+		}
 	}
 }

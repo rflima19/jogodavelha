@@ -35,12 +35,72 @@ public class FacadeConcrete implements FacadeOfSystem {
 	}
 	
 	@Override
-	public boolean cadastrarJogador(Object[] objs) {
-		return this.jogadorController.cadastrarJogador(objs);
+	public boolean cadastrarJogador(String nome) {
+		return this.jogadorController.cadastrarJogador(nome);
 	}
 	
 	@Override
-	public List<Jogador> listarJogadores() {
+	public List<String[]> listarJogadores() {
 		return this.jogadorController.listarJogadores();	
 	}
+	
+	@Override
+	public String[] pesquisarJogador(String nome) {
+		return this.jogadorController.pesquisarJogador(nome);
+	}
+	
+	@Override
+	public boolean setJogador1(String nome) {
+		return this.jogoController.setJogador1(nome);
+	}
+	
+	@Override
+	public boolean setJogador2(String nome) {
+		return this.jogoController.setJogador2(nome);
+	}
+	
+	@Override
+	public String[] getJogador1() {
+		return this.jogoController.getJogador1();
+	}
+	
+	@Override
+	public String[] getJogador2() {
+		return this.jogoController.getJogador2();
+	}
+	
+	@Override
+	public char[][] getTabuleiro() {
+		return this.jogoController.getTabuleiro();
+	}
+	
+	@Override
+	public String[] getJogadorDaRodada() {
+		return this.jogoController.getJogadorDaRodada();
+	}
+	
+	@Override
+	public boolean registrarJogada(String jogada, String simbolo) {
+		return this.jogoController.registrarJogada(jogada, simbolo);
+	}
+	
+	@Override
+	public boolean isTabuleiroCompleto() {
+		return this.jogoController.isTabuleiroCompleto();
+	}
+	
+	@Override
+	public boolean isSequenciaEncontrada() {
+		return this.jogoController.isSequenciaEncontrada();
+	}
+	
+	@Override
+	public String[] getVencedor() {
+		return this.jogoController.getVencedor();
+	}
+	
+//	@Override
+//	public void iniciarJogo() {
+//		this.jogoController.iniciarJogo();
+//	}
 }

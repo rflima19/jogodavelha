@@ -1,16 +1,17 @@
 package lima.jogodavelha.model;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Jogada {
 
-	private int numColuna;
 	private int numLinha;
-	private Simbolo simbolo;
+	private int numColuna;
 
-	public Jogada(int numColuna, int numLinha, Simbolo simbolo) {
+	public Jogada(int numLinha, int numColuna) {
 		super();
-		this.numColuna = numColuna;
 		this.numLinha = numLinha;
-		this.simbolo = simbolo;
+		this.numColuna = numColuna;
 	}
 
 	public int getNumColuna() {
@@ -20,9 +21,14 @@ public class Jogada {
 	public int getNumLinha() {
 		return numLinha;
 	}
-
-	public Simbolo getSimbolo() {
-		return simbolo;
+	
+	public static Jogada parseJogada(String jogada) {
+		Pattern pattern = Pattern.compile("\\d,\\s?\\d");
+		Matcher matcher = pattern.matcher(jogada);
+		if (matcher.matches() == false) {
+			return null;
+		}
+		String[] tokens = jogada.split(",\\s?");
+		return new Jogada(Integer.parseInt(tokens[0]), Integer.parseInt(tokens[1]));
 	}
-
 }

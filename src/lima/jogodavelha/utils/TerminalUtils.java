@@ -29,31 +29,31 @@ public class TerminalUtils {
 		return opcao;
 	}
 
-	public Object[] formulario(String titulo, List<InputUsuario> inputs) throws IOException {
-		if (titulo == null) {
-			throw new IllegalArgumentException("argumento string nulo");
-		}
-		if (inputs == null) {
-			throw new IllegalArgumentException("argumento map nulo");
-		}
-		if (inputs.size() == 0) {
-			throw new IllegalArgumentException("coleção map vazia");
-		}
-		this.imprimirCabecalho(titulo);
-
-		Object[] arrayInputs = new Object[inputs.size()];
-		Object obj = null;
-		int cont = 0;
-		for (InputUsuario input : inputs) {
-			obj = input.lerDado();
-			if (obj == null) {
-				return null;
-			}
-			arrayInputs[cont] = obj;
-			++cont;
-		}
-		return arrayInputs;
-	}
+//	public Object[] formulario(String titulo, List<InputUsuario> inputs) throws IOException {
+//		if (titulo == null) {
+//			throw new IllegalArgumentException("argumento string nulo");
+//		}
+//		if (inputs == null) {
+//			throw new IllegalArgumentException("argumento map nulo");
+//		}
+//		if (inputs.size() == 0) {
+//			throw new IllegalArgumentException("coleção map vazia");
+//		}
+//		this.imprimirCabecalho(titulo);
+//
+//		Object[] arrayInputs = new Object[inputs.size()];
+//		Object obj = null;
+//		int cont = 0;
+//		for (InputUsuario input : inputs) {
+//			obj = input.lerDado();
+//			if (obj == null) {
+//				return null;
+//			}
+//			arrayInputs[cont] = obj;
+//			++cont;
+//		}
+//		return arrayInputs;
+//	}
 
 	public void imprimirMensagem(String texto) {
 		this.imprimirLinha();

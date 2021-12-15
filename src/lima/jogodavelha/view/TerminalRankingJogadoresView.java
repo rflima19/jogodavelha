@@ -19,7 +19,7 @@ public class TerminalRankingJogadoresView {
 	}
 
 	public void imprimirRancking() {
-		List<Jogador> lista = this.facade.listarJogadores();
+		List<String[]> lista = this.facade.listarJogadores();
 		if (lista == null) {
 			return;
 		}
@@ -34,10 +34,12 @@ public class TerminalRankingJogadoresView {
 		}
 		System.out.println();
 		for (int i = 0; i < lista.size(); i++) {
-			Jogador j = lista.get(i);
+			String[] j = lista.get(i);
+			String nome = j[0];
+			int qv = Integer.parseInt(j[1]);
+			int qd = Integer.parseInt(j[2]);
 			System.out.printf("%-20s\t%-30s\t%-20s\t%-20s\t%-20s%n", (i + 1) + "º", 
-					j.getNome(), j.getQuantidadeVitorias(), j.getQuantidadeDerrotas(), 
-					(j.getQuantidadeVitorias() + j.getQuantidadeDerrotas()));
+					nome, qv, qd, (qv + qd));
 			for (int k = 0; k < 120; k++) {
 				System.out.print("-");
 			}

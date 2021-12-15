@@ -12,5 +12,15 @@ public enum Simbolo {
 	
 	public char getRepresentacao() {
 		return this.representacao;
-	}	
+	}
+	
+	public static Simbolo getSimbolo(char representacao) {
+		if (Simbolo.CIRCULO.representacao == representacao) {
+			return Simbolo.CIRCULO;
+		} else if (Simbolo.CHIS.representacao == representacao) {
+			return Simbolo.CHIS;
+		} else {
+			return null;
+		}
+	}
 }
