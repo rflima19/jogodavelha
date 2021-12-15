@@ -99,6 +99,11 @@ public class FacadeConcrete implements FacadeOfSystem {
 		return this.jogoController.getVencedor();
 	}
 	
+	@Override
+	public void criarNovoJogo() {
+		this.jogoController.criarNovoJogo();
+	}
+	
 //	@Override
 //	public void iniciarJogo() {
 //		this.jogoController.iniciarJogo();

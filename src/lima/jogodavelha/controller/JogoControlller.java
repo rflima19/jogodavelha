@@ -27,9 +27,7 @@ public class JogoControlller {
 	public JogoControlller() {
 		super();
 		this.mensagem = new TerminalMensagemView();
-		this.jogadores = new Jogador[2];
-		this.index = 1;
-		this.tabuleiro = new Tabuleiro();
+		this.criarNovoJogo();
 	}
 
 	public void switchOpcao(int opcao) {
@@ -175,5 +173,15 @@ public class JogoControlller {
 		j[2] = Integer.toString(this.vencedor.getQuantidadeDerrotas());
 		j[3] = Character.toString(this.vencedor.getSimbolo().getRepresentacao());
 		return j;
+	}
+
+	public void criarNovoJogo() {
+		this.jogador1 = null;
+		this.jogador2 = null;
+		this.jogadorDaRodada = null;
+		this.vencedor = null;
+		this.jogadores = new Jogador[2];
+		this.index = 1;
+		this.tabuleiro = new Tabuleiro();
 	}
 }

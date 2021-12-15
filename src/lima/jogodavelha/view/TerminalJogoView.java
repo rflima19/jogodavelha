@@ -41,6 +41,8 @@ public class TerminalJogoView {
 		
 		this.terminal.imprimirCabecalho(" NOVO JOGO ");
 		
+		this.facade.criarNovoJogo();
+		
 		while (true) {
 			System.out.println("Digite o nome do jogador(a) 1");
 			System.out.print(">>");
@@ -113,13 +115,14 @@ public class TerminalJogoView {
 			//break;
 		}
 		
+		System.out.println();
+		tabuleiro = this.facade.getTabuleiro();
+		this.imprimirTabuleiro(tabuleiro);
+		
 		if (vencedor == null) {
 			System.out.println();
 			this.mensagem.imprimir("Jogo terminou empatado");
 		} else {
-			System.out.println();
-			tabuleiro = this.facade.getTabuleiro();
-			this.imprimirTabuleiro(tabuleiro);
 			System.out.println();
 			this.mensagem.imprimir("Jogador(a) " + vencedor[0] + " venceu o jogo");
 		}

@@ -24,4 +24,5 @@ public interface FacadeOfSystem {
 	public abstract boolean isTabuleiroCompleto();
 	public abstract boolean isSequenciaEncontrada();
 	public abstract String[] getVencedor();
+	public abstract void criarNovoJogo();
 }
