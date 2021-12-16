@@ -14,4 +14,10 @@ public interface JogoDaVelhaDAO {
 	
 	public abstract Jogador pesquisarJogador(String nome) throws DAOException;
 
+	public abstract void salvarPontuacaoVencedor(Jogador jogador) throws DAOException;
+
+	public abstract void salvarPontuacaoDerrotado(Jogador jogador) throws DAOException;
+
+	public abstract void salvarPontuacaoEmpate(Jogador jogador1, Jogador jogador2) throws DAOException;
+
 }

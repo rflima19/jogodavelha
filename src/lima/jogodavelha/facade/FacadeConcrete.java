@@ -5,6 +5,7 @@ import java.util.List;
 import lima.jogodavelha.controller.JogadorController;
 import lima.jogodavelha.controller.JogoControlller;
 import lima.jogodavelha.exceptions.ControllerException;
+import lima.jogodavelha.exceptions.DAOException;
 import lima.jogodavelha.exceptions.JogoDaVelhaExceptions;
 import lima.jogodavelha.model.Jogador;
 
@@ -103,6 +104,21 @@ public class FacadeConcrete implements FacadeOfSystem {
 	@Override
 	public void criarNovoJogo() {
 		this.jogoController.criarNovoJogo();
+	}
+	
+	@Override
+	public void salvarPontuacaoDerrotado() throws ControllerException {
+		this.jogoController.salvarPontuacaoDerrotado();
+	}
+	
+	@Override
+	public void salvarPontuacaoEmpate() throws ControllerException {
+		this.jogoController.salvarPontuacaoEmpate();
+	}
+	
+	@Override
+	public void salvarPontuacaoVencedor() throws ControllerException {
+		this.jogoController.salvarPontuacaoVencedor();
 	}
 	
 //	@Override

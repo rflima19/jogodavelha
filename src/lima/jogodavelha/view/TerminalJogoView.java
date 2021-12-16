@@ -81,18 +81,19 @@ public class TerminalJogoView {
 		j1 = this.facade.getJogador1();
 		if (j1 != null) {
 //			this.mensagem.imprimir("Jogador(a) 1 - " + j1[0] + " [vitórias=" + j1[1] + ", derrotas=" + j1[2] + "] marca tabuleiro com " + j1[3]);
-			this.terminal.imprimirMensagem("Jogador(a) 1 - " + j1[0] + " [vitórias=" + j1[1] + ", derrotas=" + 
-					j1[2] + "] marca tabuleiro com " + j1[3]);
+			this.terminal.imprimirMensagem("Jogador(a) 1 - " + j1[0] + 
+					" [vitórias=" + j1[1] + ", derrotas=" + j1[2] + ", empates=" + j1[3] + "] marca tabuleiro com " + j1[4]);
+			System.out.println();
 		}
 		j2 = this.facade.getJogador2();
 		if (j2 != null) {
 //			this.mensagem.imprimir("Jogador(a) 2 - " + j2[0] + " [vitórias=" + j2[1] + ", derrotas=" + j2[2] + "] marca tabuleiro com " + j2[3]);
-			this.terminal.imprimirMensagem("Jogador(a) 2 - " + j2[0] + " [vitórias=" + j2[1] + ", derrotas=" + 
-					j2[2] + "] marca tabuleiro com " + j2[3]);
+			this.terminal.imprimirMensagem("Jogador(a) 2 - " + j2[0] + 
+					" [vitórias=" + j2[1] + ", derrotas=" + j2[2] + ", empates=" + j2[3] + "] marca tabuleiro com " + j2[4]);
+			System.out.println();
 		}
 		
 		while (fimJogo == false) {
-			System.out.println();
 			System.out.println(rodada + "º rodada");
 			System.out.println();
 			tabuleiro = this.facade.getTabuleiro();
@@ -107,12 +108,13 @@ public class TerminalJogoView {
 				System.out.print(">>");
 				jogadaStr = Console.readString();
 				
-				result = this.facade.registrarJogada(jogadaStr, jogadorDaRodada[3]);
+				result = this.facade.registrarJogada(jogadaStr, jogadorDaRodada[4]);
 				if (result == true) {
 					break;
 				} else {
 					// this.mensagem.imprimirErro("Jogada inválida");
 					this.terminal.imprimirMensagemErro("Jogada inválida");
+					System.out.println();
 				}
 			}
 			
@@ -142,13 +144,33 @@ public class TerminalJogoView {
 			// this.mensagem.imprimir("Jogo terminou empatado");
 			this.terminal.imprimirMensagem("Jogo terminou empatado");
 			System.out.println();
+			
+			try {
+				this.facade.salvarPontuacaoEmpate();
+			} catch (ControllerException e) {
+				this.terminal.imprimirMensagemErro(e.getMessage());
+				System.out.println();
+			}
 		} else {
 			System.out.println();
 			// this.mensagem.imprimir("Jogador(a) " + vencedor[0] + " venceu o jogo");
 			this.terminal.imprimirMensagem("Jogador(a) " + vencedor[0] + " venceu o jogo");
 			System.out.println();
+			
+			try {
+				this.facade.salvarPontuacaoVencedor();
+			} catch (ControllerException e) {
+				this.terminal.imprimirMensagemErro(e.getMessage());
+				System.out.println();
+			}
+			
+			try {
+				this.facade.salvarPontuacaoDerrotado();
+			} catch (ControllerException e) {
+				this.terminal.imprimirMensagemErro(e.getMessage());
+				System.out.println();
+			}
 		}
-		
 		//this.mensagem.imprimir("quem ganhou o jogo");
 	}
 	

@@ -16,9 +16,10 @@ public class Jogador implements Comparable<Jogador> {
 	private String nome;
 	private int quantidadeVitorias;
 	private int quantidadeDerrotas;
+	private int quantidadeEmpates;
 	private Simbolo simbolo;
 	
-	public Jogador(String nome, int quantidadeVitorias, int quantidadeDerrotas) {
+	public Jogador(String nome, int quantidadeVitorias, int quantidadeDerrotas, int quantidadeEmpates) {
 		super();
 		if (Jogador.validarNome(nome) == false) {
 			throw new IllegalArgumentException("Nome inválido");
@@ -26,10 +27,11 @@ public class Jogador implements Comparable<Jogador> {
 		this.nome = nome;
 		this.quantidadeVitorias = quantidadeVitorias;
 		this.quantidadeDerrotas = quantidadeDerrotas;
+		this.quantidadeEmpates = quantidadeEmpates;
 	}
 	
 	public Jogador(String nome) {
-		this(nome, 0, 0);
+		this(nome, 0, 0, 0);
 	}
 
 	public String getNome() {
@@ -42,6 +44,10 @@ public class Jogador implements Comparable<Jogador> {
 	
 	public int getQuantidadeDerrotas() {
 		return quantidadeDerrotas;
+	}
+	
+	public int getQuantidadeEmpates() {
+		return quantidadeEmpates;
 	}
 	
 	public void setSimbolo(Simbolo simbolo) {
@@ -62,6 +68,18 @@ public class Jogador implements Comparable<Jogador> {
 	
 	public static Jogador pesquisar(String nome) throws DAOException {
 		return Jogador.REPOSITORIO.pesquisarJogador(nome);
+	}
+	
+	public static void salvarPontuacaoVencedor(Jogador vencedor) throws DAOException {
+		Jogador.REPOSITORIO.salvarPontuacaoVencedor(vencedor);
+	}
+	
+	public static void salvarPontuacaoDerrotado(Jogador derrotado) throws DAOException {
+		Jogador.REPOSITORIO.salvarPontuacaoDerrotado(derrotado);
+	}
+	
+	public static void salvarPontuacaoEmpate(Jogador jogador1, Jogador jogador2) throws DAOException {
+		Jogador.REPOSITORIO.salvarPontuacaoEmpate(jogador1, jogador2);
 	}
 	
 	public static boolean validarNome(String nome) {

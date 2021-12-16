@@ -22,6 +22,7 @@ public class JogoControlller {
 	private Jogador jogador2;
 	private Jogador jogadorDaRodada;
 	private Jogador vencedor;
+	private Jogador derrotado;
 	private Jogador[] jogadores;
 	private int index;
 	private Tabuleiro tabuleiro;
@@ -115,11 +116,12 @@ public class JogoControlller {
 		if (this.jogador1 == null) {
 			return null;
 		}
-		String[] j = new String[4];
+		String[] j = new String[5];
 		j[0] = this.jogador1.getNome();
 		j[1] = Integer.toString(this.jogador1.getQuantidadeVitorias());
 		j[2] = Integer.toString(this.jogador1.getQuantidadeDerrotas());
-		j[3] = Character.toString(this.jogador1.getSimbolo().getRepresentacao());
+		j[3] = Integer.toString(this.jogador1.getQuantidadeEmpates());
+		j[4] = Character.toString(this.jogador1.getSimbolo().getRepresentacao());
 		return j;
 	}
 	
@@ -127,11 +129,12 @@ public class JogoControlller {
 		if (this.jogador2 == null) {
 			return null;
 		}
-		String[] j = new String[4];
+		String[] j = new String[5];
 		j[0] = this.jogador2.getNome();
 		j[1] = Integer.toString(this.jogador2.getQuantidadeVitorias());
 		j[2] = Integer.toString(this.jogador2.getQuantidadeDerrotas());
-		j[3] = Character.toString(this.jogador2.getSimbolo().getRepresentacao());
+		j[3] = Integer.toString(this.jogador2.getQuantidadeEmpates());
+		j[4] = Character.toString(this.jogador2.getSimbolo().getRepresentacao());
 		return j;
 	}
 	
@@ -142,11 +145,12 @@ public class JogoControlller {
 	public String[] getJogadorDaRodada() {
 		this.index = (this.index + 1) % this.jogadores.length;
 		this.jogadorDaRodada = this.jogadores[index];
-		String[] j = new String[4];
+		String[] j = new String[5];
 		j[0] = jogadorDaRodada.getNome();
 		j[1] = Integer.toString(jogadorDaRodada.getQuantidadeVitorias());
 		j[2] = Integer.toString(jogadorDaRodada.getQuantidadeDerrotas());
-		j[3] = Character.toString(jogadorDaRodada.getSimbolo().getRepresentacao());
+		j[3] = Integer.toString(jogadorDaRodada.getQuantidadeEmpates());
+		j[4] = Character.toString(jogadorDaRodada.getSimbolo().getRepresentacao());
 		return j;
 	}
 
@@ -167,6 +171,8 @@ public class JogoControlller {
 		boolean result = this.tabuleiro.isSequenciaEncontrada();
 		if (result == true) {
 			this.vencedor = this.jogadorDaRodada;
+			this.index = (this.index + 1) % this.jogadores.length;
+			this.derrotado = this.jogadores[this.index];
 			return true;
 		}
 		return false;
@@ -176,12 +182,37 @@ public class JogoControlller {
 		if (this.vencedor == null) {
 			return null;
 		}
-		String[] j = new String[4];
+		String[] j = new String[5];
 		j[0] = this.vencedor.getNome();
 		j[1] = Integer.toString(this.vencedor.getQuantidadeVitorias());
 		j[2] = Integer.toString(this.vencedor.getQuantidadeDerrotas());
-		j[3] = Character.toString(this.vencedor.getSimbolo().getRepresentacao());
+		j[3] = Integer.toString(this.vencedor.getQuantidadeEmpates());
+		j[4] = Character.toString(this.vencedor.getSimbolo().getRepresentacao());
 		return j;
+	}
+	
+	public void salvarPontuacaoVencedor() throws ControllerException {
+		try {
+			Jogador.salvarPontuacaoVencedor(this.vencedor);
+		} catch (DAOException e) {
+			throw new ControllerException("Erro ao tentar salvar a pontuação do jogador vencedor", e);
+		}
+	}
+	
+	public void salvarPontuacaoDerrotado() throws ControllerException {
+		try {
+			Jogador.salvarPontuacaoDerrotado(this.derrotado);
+		} catch (DAOException e) {
+			throw new ControllerException("Erro ao tentar salvar a pontuação do jogador derrotado", e);
+		}
+	}
+	
+	public void salvarPontuacaoEmpate() throws ControllerException {
+		try {
+			Jogador.salvarPontuacaoEmpate(this.jogadores[0], this.jogadores[1]);
+		} catch (DAOException e) {
+			throw new ControllerException("Erro ao tentar salvar a pontuação de empate dos jogadores", e);
+		}
 	}
 
 	public void criarNovoJogo() {

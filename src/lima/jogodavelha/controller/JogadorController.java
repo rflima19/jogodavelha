@@ -36,7 +36,7 @@ public class JogadorController {
 			throw new ControllerException("Erro ao pesquisar jogador na base de dados", e);
 		}
 		try {
-			jogador = new Jogador(nome, 0, 0);
+			jogador = new Jogador(nome, 0, 0, 0);
 			jogador.cadastrar();
 		} catch (DAOException e) {
 			throw new ControllerException("Erro ao cadastrar jogador na base de dados", e);
@@ -59,7 +59,8 @@ public class JogadorController {
 				String nome = j.getNome();
 				String qv = Integer.toString(j.getQuantidadeVitorias());
 				String qd = Integer.toString(j.getQuantidadeDerrotas());
-				listaView.add(new String[] {nome, qv, qd});
+				String qe = Integer.toString(j.getQuantidadeEmpates());
+				listaView.add(new String[] {nome, qv, qd, qe});
 			}
 		} catch (DAOException e) {
 			// this.mensagem.imprimirErro(e);
@@ -72,7 +73,7 @@ public class JogadorController {
 		if (Jogador.validarNome(nome) == false) {
 			throw new ControllerException("Nome '" + nome + "' não válido");
 		}
-		String[] jogador = new String[3];
+		String[] jogador = new String[4];
 		Jogador j = null;
 		try {
 			j = Jogador.pesquisar(nome);
@@ -80,6 +81,7 @@ public class JogadorController {
 				jogador[0] = j.getNome();
 				jogador[1] = Integer.toString(j.getQuantidadeVitorias());
 				jogador[2] = Integer.toString(j.getQuantidadeDerrotas());
+				jogador[3] = Integer.toString(j.getQuantidadeEmpates());
 			}
 		} catch (DAOException e) {
 			// this.mensagem.imprimirErro(e);

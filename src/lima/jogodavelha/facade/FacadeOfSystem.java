@@ -3,6 +3,7 @@ package lima.jogodavelha.facade;
 import java.util.List;
 
 import lima.jogodavelha.exceptions.ControllerException;
+import lima.jogodavelha.exceptions.DAOException;
 import lima.jogodavelha.model.Jogador;
 
 /**
@@ -26,4 +27,8 @@ public interface FacadeOfSystem {
 	public abstract boolean isSequenciaEncontrada();
 	public abstract String[] getVencedor();
 	public abstract void criarNovoJogo();
+	public abstract void salvarPontuacaoVencedor() throws ControllerException;
+	public abstract void salvarPontuacaoDerrotado() throws ControllerException;
+	public abstract void salvarPontuacaoEmpate() throws ControllerException;
+
 }

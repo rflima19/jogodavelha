@@ -30,8 +30,8 @@ public class TerminalRankingJogadoresView {
 				System.out.print("-");
 			}
 			System.out.println();
-			System.out.printf("%-20s\t%-30s\t%-20s\t%-20s\t%-20s%n", 
-					"POSIÇÃO", "JOGADOR", "VITÓRIAS", "DERROTAS", "TOTAL JOGOS");
+			System.out.printf("%-10s\t%-30s\t%-10s\t%-10s\t%-10s\t%-10s%n", 
+					"POSIÇÃO", "JOGADOR", "VITÓRIAS", "DERROTAS", "EMPATES", "TOTAL JOGOS");
 			for (int i = 0; i < 120; i++) {
 				System.out.print("-");
 			}
@@ -41,7 +41,8 @@ public class TerminalRankingJogadoresView {
 				String nome = j[0];
 				int qv = Integer.parseInt(j[1]);
 				int qd = Integer.parseInt(j[2]);
-				System.out.printf("%-20s\t%-30s\t%-20s\t%-20s\t%-20s%n", (i + 1) + "º", nome, qv, qd, (qv + qd));
+				int qe = Integer.parseInt(j[3]);
+				System.out.printf("%-10s\t%-30s\t%-10s\t%-10s\t%-10s\t%-10s%n", (i + 1) + "º", nome, qv, qd, qe, (qv + qd + qe));
 				for (int k = 0; k < 120; k++) {
 					System.out.print("-");
 				}
