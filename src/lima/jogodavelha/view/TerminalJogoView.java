@@ -1,30 +1,21 @@
 package lima.jogodavelha.view;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import lima.jogodavelha.exceptions.ControllerException;
-import lima.jogodavelha.exceptions.JogoDaVelhaExceptions;
 import lima.jogodavelha.facade.FacadeConcrete;
 import lima.jogodavelha.facade.FacadeOfSystem;
-import lima.jogodavelha.model.Jogador;
 import lima.jogodavelha.utils.Console;
-import lima.jogodavelha.utils.InputUsuario;
-import lima.jogodavelha.utils.InputUsuarioString;
 import lima.jogodavelha.utils.TerminalUtils;
-import lima.jogodavelha.utils.ValidadorNome;
 
 public class TerminalJogoView {
 
 	private TerminalUtils terminal;
-	// private TerminalMensagemView mensagem;
 	private FacadeOfSystem facade;
 
 	public TerminalJogoView() {
 		super();
 		this.terminal = new TerminalUtils();
-		// this.mensagem = new TerminalMensagemView();
 		this.facade = FacadeConcrete.getFacade();
 	}
 
@@ -52,6 +43,7 @@ public class TerminalJogoView {
 				result = this.facade.setJogador1(nome);
 				if (result == false) {
 					this.terminal.imprimirMensagemErro("Nome '" + nome + "' não válido");
+					System.out.println();
 					continue;
 				}
 				break;
@@ -68,6 +60,7 @@ public class TerminalJogoView {
 				result = this.facade.setJogador2(nome);
 				if (result == false) {
 					this.terminal.imprimirMensagemErro("Nome '" + nome + "' não válido");
+					System.out.println();
 					continue;
 				}
 				break;
@@ -77,17 +70,14 @@ public class TerminalJogoView {
 			}
 		}
 		
-		//this.facade.iniciarJogo();
 		j1 = this.facade.getJogador1();
 		if (j1 != null) {
-//			this.mensagem.imprimir("Jogador(a) 1 - " + j1[0] + " [vitórias=" + j1[1] + ", derrotas=" + j1[2] + "] marca tabuleiro com " + j1[3]);
 			this.terminal.imprimirMensagem("Jogador(a) 1 - " + j1[0] + 
 					" [vitórias=" + j1[1] + ", derrotas=" + j1[2] + ", empates=" + j1[3] + "] marca tabuleiro com " + j1[4]);
 			System.out.println();
 		}
 		j2 = this.facade.getJogador2();
 		if (j2 != null) {
-//			this.mensagem.imprimir("Jogador(a) 2 - " + j2[0] + " [vitórias=" + j2[1] + ", derrotas=" + j2[2] + "] marca tabuleiro com " + j2[3]);
 			this.terminal.imprimirMensagem("Jogador(a) 2 - " + j2[0] + 
 					" [vitórias=" + j2[1] + ", derrotas=" + j2[2] + ", empates=" + j2[3] + "] marca tabuleiro com " + j2[4]);
 			System.out.println();
@@ -132,7 +122,6 @@ public class TerminalJogoView {
 			}
 			
 			rodada++;
-			//break;
 		}
 		
 		System.out.println();
@@ -141,7 +130,6 @@ public class TerminalJogoView {
 		
 		if (vencedor == null) {
 			System.out.println();
-			// this.mensagem.imprimir("Jogo terminou empatado");
 			this.terminal.imprimirMensagem("Jogo terminou empatado");
 			System.out.println();
 			
@@ -153,7 +141,6 @@ public class TerminalJogoView {
 			}
 		} else {
 			System.out.println();
-			// this.mensagem.imprimir("Jogador(a) " + vencedor[0] + " venceu o jogo");
 			this.terminal.imprimirMensagem("Jogador(a) " + vencedor[0] + " venceu o jogo");
 			System.out.println();
 			
@@ -171,7 +158,6 @@ public class TerminalJogoView {
 				System.out.println();
 			}
 		}
-		//this.mensagem.imprimir("quem ganhou o jogo");
 	}
 	
 	private void imprimirTabuleiro(char[][] tabuleiro) {
@@ -190,15 +176,4 @@ public class TerminalJogoView {
 			}
 		}
 	}
-	
-//	public static void main(String[] args) {
-//		char[][] c = new char[3][3];
-//		new TerminalJogoView().imprimirTabuleiro(c);
-//	}
-	
-//	public String solicitarNome() throws IOException {
-//		System.out.println("Digite o nome do jogador 1");
-//		System.out.print(">>");
-//		return Console.readString();
-//	}
 }

@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lima.jogodavelha.exceptions.DAOException;
-import lima.jogodavelha.exceptions.JogoDaVelhaExceptions;
 import lima.jogodavelha.model.Jogador;
 
 public class JogadorDAO implements JogoDaVelhaDAO {

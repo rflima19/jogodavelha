@@ -80,14 +80,5 @@ public class Tabuleiro {
 		}
 	
 		return false;
-	}
-	
-//	private void imprimirTabuleiro() {
-//		for (int i = 0; i < this.matriz.length; i++) {
-//			for (int j = 0; j < this.matriz[i].length; j++) {
-//				
-//			}
-//		} 
-//	}
-	
+	}	
 }

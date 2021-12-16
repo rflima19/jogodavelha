@@ -1,12 +1,10 @@
 package lima.jogodavelha.model;
 
-import java.io.IOException;
 import java.util.List;
 
 import lima.jogodavelha.DAO.JogadorDAO;
 import lima.jogodavelha.DAO.JogoDaVelhaDAO;
 import lima.jogodavelha.exceptions.DAOException;
-import lima.jogodavelha.exceptions.JogoDaVelhaExceptions;
 import lima.jogodavelha.utils.ValidadorNome;
 
 public class Jogador implements Comparable<Jogador> {

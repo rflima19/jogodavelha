@@ -5,9 +5,6 @@ import java.util.List;
 import lima.jogodavelha.controller.JogadorController;
 import lima.jogodavelha.controller.JogoControlller;
 import lima.jogodavelha.exceptions.ControllerException;
-import lima.jogodavelha.exceptions.DAOException;
-import lima.jogodavelha.exceptions.JogoDaVelhaExceptions;
-import lima.jogodavelha.model.Jogador;
 
 /**
  * Segue o padrão singleton
@@ -30,11 +27,6 @@ public class FacadeConcrete implements FacadeOfSystem {
 		}
 		return FacadeConcrete.facade;
 	}
-	
-//	@Override
-//	public void switchOpcao(int opcao) throws ControllerException {
-//		this.jogoController.switchOpcao(opcao);
-//	}
 	
 	@Override
 	public void cadastrarJogador(String nome) throws ControllerException {
@@ -120,9 +112,4 @@ public class FacadeConcrete implements FacadeOfSystem {
 	public void salvarPontuacaoVencedor() throws ControllerException {
 		this.jogoController.salvarPontuacaoVencedor();
 	}
-	
-//	@Override
-//	public void iniciarJogo() {
-//		this.jogoController.iniciarJogo();
-//	}
 }

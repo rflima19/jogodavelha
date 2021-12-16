@@ -6,30 +6,22 @@ import java.util.List;
 
 import lima.jogodavelha.exceptions.ControllerException;
 import lima.jogodavelha.exceptions.DAOException;
-import lima.jogodavelha.exceptions.JogoDaVelhaExceptions;
 import lima.jogodavelha.model.Jogador;
-import lima.jogodavelha.utils.ValidadorNome;
-import lima.jogodavelha.view.TerminalMensagemView;
 
 public class JogadorController {
 
 	public JogadorController() {
 		super();
-		// this.mensagem = new TerminalMensagemView();
 	}
 
 	public void cadastrarJogador(String nome) throws ControllerException {
 		if (Jogador.validarNome(nome) == false) {
 			throw new ControllerException("Nome '" + nome + "' não válido para cadastro");
-			// return false;
 		}
 		Jogador jogador = null;
 		try {
-			// String nome = (String) objs[0];
 			jogador = Jogador.pesquisar(nome);
 			if (jogador != null) {
-				// this.mensagem.imprimir("Já existe um jogador com o nome '" + nome + "' cadastrado no sistema");
-				// return false;
 				throw new ControllerException("Já existe um jogador com o nome '" + nome + "' cadastrado no sistema");
 			}
 		} catch (DAOException e) {
@@ -40,8 +32,7 @@ public class JogadorController {
 			jogador.cadastrar();
 		} catch (DAOException e) {
 			throw new ControllerException("Erro ao cadastrar jogador na base de dados", e);
-		} 
-		// return true;
+		}
 	}
 
 	public List<String[]> listarJogadores() throws ControllerException {
@@ -50,8 +41,6 @@ public class JogadorController {
 		try {
 			listaBD = Jogador.listar();
 			if (listaBD.isEmpty() == true) {
-				// this.mensagem.imprimir("Não existem jogadores cadastrados no sistema");
-				// return null;
 				throw new ControllerException("Não existem jogadores cadastrados no sistema");
 			}
 			Collections.sort(listaBD);
@@ -63,7 +52,6 @@ public class JogadorController {
 				listaView.add(new String[] {nome, qv, qd, qe});
 			}
 		} catch (DAOException e) {
-			// this.mensagem.imprimirErro(e);
 			throw new ControllerException("Erro ao listar jogadores da base de dados", e);
 		}
 		return listaView;
@@ -84,7 +72,6 @@ public class JogadorController {
 				jogador[3] = Integer.toString(j.getQuantidadeEmpates());
 			}
 		} catch (DAOException e) {
-			// this.mensagem.imprimirErro(e);
 			throw new ControllerException("Erro ao pesquisar jogador na base de dados", e);
 		}
 		return jogador;

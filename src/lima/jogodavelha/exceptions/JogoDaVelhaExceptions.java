@@ -27,6 +27,4 @@ public class JogoDaVelhaExceptions extends Exception {
 	public JogoDaVelhaExceptions(Throwable cause) {
 		super(cause);
 	}
-
-	
 }

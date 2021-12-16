@@ -5,7 +5,6 @@ import java.util.List;
 import lima.jogodavelha.exceptions.ControllerException;
 import lima.jogodavelha.facade.FacadeConcrete;
 import lima.jogodavelha.facade.FacadeOfSystem;
-import lima.jogodavelha.model.Jogador;
 import lima.jogodavelha.utils.TerminalUtils;
 
 public class TerminalRankingJogadoresView {
