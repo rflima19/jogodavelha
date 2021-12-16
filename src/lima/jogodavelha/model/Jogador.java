@@ -5,6 +5,7 @@ import java.util.List;
 
 import lima.jogodavelha.DAO.JogadorDAO;
 import lima.jogodavelha.DAO.JogoDaVelhaDAO;
+import lima.jogodavelha.exceptions.DAOException;
 import lima.jogodavelha.exceptions.JogoDaVelhaExceptions;
 import lima.jogodavelha.utils.ValidadorNome;
 
@@ -19,7 +20,7 @@ public class Jogador implements Comparable<Jogador> {
 	
 	public Jogador(String nome, int quantidadeVitorias, int quantidadeDerrotas) {
 		super();
-		if (new ValidadorNome().test(nome) == false) {
+		if (Jogador.validarNome(nome) == false) {
 			throw new IllegalArgumentException("Nome inválido");
 		}
 		this.nome = nome;
@@ -51,16 +52,20 @@ public class Jogador implements Comparable<Jogador> {
 		return simbolo;
 	}
 	
-	public void cadastrar() throws JogoDaVelhaExceptions {
+	public void cadastrar() throws DAOException {
 		Jogador.REPOSITORIO.cadastarJogador(this);
 	}
 	
-	public static List<Jogador> listar() throws JogoDaVelhaExceptions {
+	public static List<Jogador> listar() throws DAOException {
 		return Jogador.REPOSITORIO.listarJogadores();
 	}
 	
-	public static Jogador pesquisar(String nome) throws JogoDaVelhaExceptions {
+	public static Jogador pesquisar(String nome) throws DAOException {
 		return Jogador.REPOSITORIO.pesquisarJogador(nome);
+	}
+	
+	public static boolean validarNome(String nome) {
+		return new ValidadorNome().test(nome);
 	}
 	
 	@Override

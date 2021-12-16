@@ -2,6 +2,8 @@ package lima.jogodavelha.controller;
 
 import java.io.IOException;
 
+import lima.jogodavelha.exceptions.ControllerException;
+import lima.jogodavelha.exceptions.DAOException;
 import lima.jogodavelha.exceptions.JogoDaVelhaExceptions;
 import lima.jogodavelha.model.Jogada;
 import lima.jogodavelha.model.Jogador;
@@ -15,7 +17,7 @@ import lima.jogodavelha.view.TerminalRankingJogadoresView;
 
 public class JogoControlller {
 	
-	private TerminalMensagemView mensagem; //TODO desanexar camada controller com a view
+	//private TerminalMensagemView mensagem; //TODO desanexar camada controller com a view
 	private Jogador jogador1;
 	private Jogador jogador2;
 	private Jogador jogadorDaRodada;
@@ -26,41 +28,46 @@ public class JogoControlller {
 		
 	public JogoControlller() {
 		super();
-		this.mensagem = new TerminalMensagemView();
+		//this.mensagem = new TerminalMensagemView();
 		this.criarNovoJogo();
 	}
 
-	public void switchOpcao(int opcao) {
-		switch (opcao) {
-		case 1 -> {
-			try {
-				new TerminalCadastroJogador().cadastrarJogador();
-			} catch (IOException e) {
-				this.mensagem.imprimirErro("Erro de I/O ao cadastar jogador", e);
-			}
-		}
-		case 2 -> {
-			try {
-				new TerminalJogoView().iniciarJogo();
-			} catch (IOException e) {
-				this.mensagem.imprimirErro("Erro de I/O ao iniciar o jogor", e);
-			}
-		}
-		case 3 -> {
-			new TerminalRankingJogadoresView().imprimirRancking();
-		}
-		case 4 -> System.exit(0);
-		default -> {
-			this.mensagem.imprimirErro("Opção inválida");
-		}
-		}
-	}
+//	public void switchOpcao(int opcao) throws ControllerException { //TODO trocar switchOpcao para classe menu
+//		switch (opcao) {
+//		case 1 -> {
+//			try {
+//				new TerminalCadastroJogador().cadastrarJogador();
+//			} catch (IOException e) {
+//				this.terminal.imprimirMensagemErro("Erro de I/O");
+//				e.printStackTrace();
+//				System.exit(1);
+//				//this.mensagem.imprimirErro("Erro de I/O ao cadastar jogador", e);
+//			}
+//		}
+//		case 2 -> {
+//			try {
+//				new TerminalJogoView().iniciarJogo();
+//			} catch (IOException e) {
+//				//this.mensagem.imprimirErro("Erro de I/O ao iniciar o jogor", e);
+//			}
+//		}
+//		case 3 -> {
+//			new TerminalRankingJogadoresView().imprimirRancking();
+//		}
+//		case 4 -> System.exit(0);
+//		default -> {
+//			//this.mensagem.imprimirErro("Opção inválida");
+//			throw new ControllerException("Opção " + opcao + " não existe no menu");
+//		}
+//		}
+//	}
 	
-	public boolean setJogador1(String nome) {
+	public boolean setJogador1(String nome) throws ControllerException {
 		ValidadorNome vn = new ValidadorNome();
 		if (vn.test(nome) == false) {
-			this.mensagem.imprimirErro("Nome inválido");
+			// this.mensagem.imprimirErro("Nome inválido");
 			return false;
+			// throw new ControllerException("Nome '" + nome + "' não válido");
 		}
 		try {
 			this.jogador1 = Jogador.pesquisar(nome);
@@ -72,18 +79,19 @@ public class JogoControlller {
 			
 			this.jogador1.setSimbolo(Simbolo.CHIS);
 			this.jogadores[0] = this.jogador1;
-		} catch (JogoDaVelhaExceptions e) {
-			this.mensagem.imprimirErro(e);
-			return false;
+		} catch (DAOException e) {
+			// this.mensagem.imprimirErro(e);
+			// return false;
+			throw new ControllerException("Erro ao pesquisar jogador na base de dados", e);
 		}
 		return true;
 	}
 	
-	public boolean setJogador2(String nome) {
-		ValidadorNome vn = new ValidadorNome();
-		if (vn.test(nome) == false) {
-			this.mensagem.imprimirErro("Nome inválido");
+	public boolean setJogador2(String nome) throws ControllerException {
+		if (Jogador.validarNome(nome) == false) {
+			// this.mensagem.imprimirErro("Nome inválido");
 			return false;
+			// throw new ControllerException("Nome '" + nome + "' não válido");
 		}
 		try {
 			this.jogador2 = Jogador.pesquisar(nome);
@@ -95,9 +103,10 @@ public class JogoControlller {
 			
 			this.jogador2.setSimbolo(Simbolo.CIRCULO);
 			this.jogadores[1] = this.jogador2;
-		} catch (JogoDaVelhaExceptions e) {
-			this.mensagem.imprimirErro(e);
-			return false;
+		} catch (DAOException e) {
+			// this.mensagem.imprimirErro(e);
+			// return false;
+			throw new ControllerException("Erro ao pesquisar jogador na base de dados", e);
 		}
 		return true;
 	}

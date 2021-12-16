@@ -2,6 +2,7 @@ package lima.jogodavelha.facade;
 
 import java.util.List;
 
+import lima.jogodavelha.exceptions.ControllerException;
 import lima.jogodavelha.model.Jogador;
 
 /**
@@ -9,12 +10,12 @@ import lima.jogodavelha.model.Jogador;
  * */
 public interface FacadeOfSystem {
 
-	public abstract void switchOpcao(int opcao);
-	public abstract boolean cadastrarJogador(String nome);
-	public abstract List<String[]> listarJogadores();
-	public abstract String[] pesquisarJogador(String nome);
-	public abstract boolean setJogador1(String nome);
-	public abstract boolean setJogador2(String nome);
+//	public abstract void switchOpcao(int opcao) throws ControllerException;
+	public abstract void cadastrarJogador(String nome) throws ControllerException;
+	public abstract List<String[]> listarJogadores() throws ControllerException;
+	public abstract String[] pesquisarJogador(String nome) throws ControllerException;
+	public abstract boolean setJogador1(String nome) throws ControllerException;
+	public abstract boolean setJogador2(String nome)  throws ControllerException;
 	//public abstract void iniciarJogo();
 	public abstract String[] getJogador1();
 	public abstract String[] getJogador2();

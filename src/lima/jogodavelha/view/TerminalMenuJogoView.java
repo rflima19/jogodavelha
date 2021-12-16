@@ -2,6 +2,7 @@ package lima.jogodavelha.view;
 
 import java.io.IOException;
 
+import lima.jogodavelha.exceptions.ControllerException;
 import lima.jogodavelha.exceptions.JogoDaVelhaExceptions;
 import lima.jogodavelha.facade.FacadeConcrete;
 import lima.jogodavelha.facade.FacadeOfSystem;
@@ -10,14 +11,14 @@ import lima.jogodavelha.utils.TerminalUtils;
 public class TerminalMenuJogoView {
 
 	private TerminalUtils terminal;
-	private TerminalMensagemView mensagem;
-	private FacadeOfSystem facade;
+	//private TerminalMensagemView mensagem;
+	//private FacadeOfSystem facade;
 
 	public TerminalMenuJogoView() {
 		super();
 		this.terminal = new TerminalUtils();
-		this.mensagem = new TerminalMensagemView();
-		this.facade = FacadeConcrete.getFacade();
+		//this.mensagem = new TerminalMensagemView();
+		//this.facade = FacadeConcrete.getFacade();
 	}
 
 	public void imprimirMenu() {
@@ -28,16 +29,31 @@ public class TerminalMenuJogoView {
 		while (true) {
 			try {
 				opcao = this.terminal.menuOpcoes(" MENU ", opcoes);
-				this.facade.switchOpcao(opcao);
+				// this.facade.switchOpcao(opcao);
+				
+				switch (opcao) {
+				case 1 -> {
+					new TerminalCadastroJogador().cadastrarJogador();
+				}
+				case 2 -> {
+					new TerminalJogoView().iniciarJogo();
+				}
+				case 3 -> {
+					new TerminalRankingJogadoresView().imprimirRancking();
+				}
+				case 4 -> System.exit(0);
+				default -> {
+					this.terminal.imprimirMensagemErro("Opção " + opcao + " não existe no menu");
+				}
+				}
+//			} catch (ControllerException e) {
+//				this.terminal.imprimirMensagemErro(e.getMessage());
+//				System.out.printf("%n");
 			} catch (IOException e) {
-//				this.terminal.imprimirMensagemErro("Erro de I/O");
-//				e.printStackTrace();
-//				System.out.println();
-				this.mensagem.imprimirErro("Erro de I/O", e);
-			} catch (NumberFormatException e) {
-//				this.terminal.imprimirMensagemErro("Digite um inteiro válido");
-//				System.out.println();
-				this.mensagem.imprimirErro("Digite um inteiro válido");
+				this.terminal.imprimirMensagemErro("Erro de I/O");
+				e.printStackTrace();
+				System.exit(1);
+				 //this.mensagem.imprimirErro("Erro de I/O", e);
 			}
 			System.out.println();
 		}

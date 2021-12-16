@@ -15,17 +15,23 @@ public class TerminalUtils {
 		if (titulos.length == 0) {
 			throw new IllegalArgumentException("Array com tamanho 0");
 		}
-		this.imprimirCabecalho(titulo);
 
 		int opcao = 0;
-		for (int i = 0; i < titulos.length; i++) {
-			System.out.println((i + 1) + " - " + titulos[i]);
+		while (true) {
+			this.imprimirCabecalho(titulo);
+			for (int i = 0; i < titulos.length; i++) {
+				System.out.println((i + 1) + " - " + titulos[i]);
+			}
+			try {
+				System.out.print(">>");
+				opcao = Console.readInteger();
+			} catch (NumberFormatException e) {
+				this.imprimirMensagemErro("Digite um valor inteiro");
+				System.out.printf("%n%n");
+				continue;
+			}
+			break;
 		}
-		System.out.print(">>");
-		opcao = Console.readInteger();
-//		if (opcao < 1 || opcao > titulos.length) {
-//			return null;
-//		}
 		return opcao;
 	}
 

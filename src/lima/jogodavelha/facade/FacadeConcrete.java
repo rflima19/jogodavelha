@@ -4,6 +4,7 @@ import java.util.List;
 
 import lima.jogodavelha.controller.JogadorController;
 import lima.jogodavelha.controller.JogoControlller;
+import lima.jogodavelha.exceptions.ControllerException;
 import lima.jogodavelha.exceptions.JogoDaVelhaExceptions;
 import lima.jogodavelha.model.Jogador;
 
@@ -29,33 +30,33 @@ public class FacadeConcrete implements FacadeOfSystem {
 		return FacadeConcrete.facade;
 	}
 	
+//	@Override
+//	public void switchOpcao(int opcao) throws ControllerException {
+//		this.jogoController.switchOpcao(opcao);
+//	}
+	
 	@Override
-	public void switchOpcao(int opcao) {
-		this.jogoController.switchOpcao(opcao);
+	public void cadastrarJogador(String nome) throws ControllerException {
+		this.jogadorController.cadastrarJogador(nome);
 	}
 	
 	@Override
-	public boolean cadastrarJogador(String nome) {
-		return this.jogadorController.cadastrarJogador(nome);
-	}
-	
-	@Override
-	public List<String[]> listarJogadores() {
+	public List<String[]> listarJogadores() throws ControllerException {
 		return this.jogadorController.listarJogadores();	
 	}
 	
 	@Override
-	public String[] pesquisarJogador(String nome) {
+	public String[] pesquisarJogador(String nome) throws ControllerException {
 		return this.jogadorController.pesquisarJogador(nome);
 	}
 	
 	@Override
-	public boolean setJogador1(String nome) {
+	public boolean setJogador1(String nome) throws ControllerException {
 		return this.jogoController.setJogador1(nome);
 	}
 	
 	@Override
-	public boolean setJogador2(String nome) {
+	public boolean setJogador2(String nome) throws ControllerException {
 		return this.jogoController.setJogador2(nome);
 	}
 	
