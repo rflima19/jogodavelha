@@ -10,182 +10,13 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiPredicate;
+import java.util.function.Function;
 
 import lima.jogodavelha.exceptions.DAOException;
 import lima.jogodavelha.model.Jogador;
 
 public class JogadorDAO implements JogoDaVelhaDAO {
-
-	private interface RegistradorResultado {
-		public abstract void salvar() throws DAOException;
-	}
-
-	private class PontuacaoVencedor implements JogadorDAO.RegistradorResultado {
-		private Jogador vencedor;
-
-		public PontuacaoVencedor(Jogador vencedor) {
-			super();
-			this.vencedor = vencedor;
-		}
-
-		@Override
-		public void salvar() throws DAOException {
-			File arquivoTemporario = new File(JogadorDAO.DIRETORIO, "jogo_temp.txt");
-			try {
-				arquivoTemporario.createNewFile();
-			} catch (IOException e) {
-				throw new DAOException("Não foi possivel criar o arquivo temporário", e);
-			}
-			try {
-				try (Reader in = new FileReader(JogadorDAO.ARQUIVO);
-						BufferedReader buffer = new BufferedReader(in);
-						Writer out = new FileWriter(arquivoTemporario);
-						PrintWriter print = new PrintWriter(out)) {
-					String line = null;
-					String[] tokens = null;
-					String nome = null;
-					Integer num = null;
-					String str = null;
-					while ((line = buffer.readLine()) != null) {
-						tokens = line.split(";");
-						nome = tokens[0];
-						if (nome.equals(this.vencedor.getNome()) == true) {
-							num = Integer.parseInt(tokens[1]);
-							++num;
-							str = tokens[0] + ";" + num + ";" + tokens[2] + ";" + tokens[3];
-						} else {
-							str = tokens[0] + ";" + tokens[1] + ";" + tokens[2] + ";" + tokens[3];
-						}
-						print.println(str);
-					}
-				} catch (IOException e) {
-					throw new DAOException("Não foi possível ler a base de dados", e);
-				}
-
-				try {
-					JogadorDAO.this.copiarArquivo(arquivoTemporario, JogadorDAO.ARQUIVO);
-				} catch (IOException e) {
-					throw new DAOException("Não foi possível restaurar a base de dados", e);
-				}
-			} finally {
-				if (arquivoTemporario.exists() == true) {
-					arquivoTemporario.delete();
-				}
-			}
-		}
-	}
-
-	private class PontuacaoDerrotado implements JogadorDAO.RegistradorResultado {
-		private Jogador derrotado;
-
-		public PontuacaoDerrotado(Jogador derrotado) {
-			super();
-			this.derrotado = derrotado;
-		}
-
-		@Override
-		public void salvar() throws DAOException {
-			File arquivoTemporario = new File(JogadorDAO.DIRETORIO, "jogo_temp.txt");
-			try {
-				arquivoTemporario.createNewFile();
-			} catch (IOException e) {
-				throw new DAOException("Não foi possivel criar o arquivo temporário", e);
-			}
-			try {
-				try (Reader in = new FileReader(JogadorDAO.ARQUIVO);
-						BufferedReader buffer = new BufferedReader(in);
-						Writer out = new FileWriter(arquivoTemporario);
-						PrintWriter print = new PrintWriter(out)) {
-					String line = null;
-					String[] tokens = null;
-					String nome = null;
-					Integer num = null;
-					String str = null;
-					while ((line = buffer.readLine()) != null) {
-						tokens = line.split(";");
-						nome = tokens[0];
-						if (nome.equals(this.derrotado.getNome()) == true) {
-							num = Integer.parseInt(tokens[2]);
-							++num;
-							str = tokens[0] + ";" + tokens[1] + ";" + num + ";" + tokens[3];
-						} else {
-							str = tokens[0] + ";" + tokens[1] + ";" + tokens[2] + ";" + tokens[3];
-						}
-						print.println(str);
-					}
-				} catch (IOException e) {
-					throw new DAOException("Não foi possível ler a base de dados", e);
-				}
-
-				try {
-					JogadorDAO.this.copiarArquivo(arquivoTemporario, JogadorDAO.ARQUIVO);
-				} catch (IOException e) {
-					throw new DAOException("Não foi possível restaurar a base de dados", e);
-				}
-			} finally {
-				if (arquivoTemporario.exists() == true) {
-					arquivoTemporario.delete();
-				}
-			}
-		}
-	}
-
-	private class PontuacaoEmpate implements JogadorDAO.RegistradorResultado {
-		private Jogador jogador1;
-		private Jogador jogador2;
-
-		public PontuacaoEmpate(Jogador jogador1, Jogador jogador2) {
-			super();
-			this.jogador1 = jogador1;
-			this.jogador2 = jogador2;
-		}
-
-		@Override
-		public void salvar() throws DAOException {
-			File arquivoTemporario = new File(JogadorDAO.DIRETORIO, "jogo_temp.txt");
-			try {
-				arquivoTemporario.createNewFile();
-			} catch (IOException e) {
-				throw new DAOException("Não foi possivel criar o arquivo temporário", e);
-			}
-			try {
-				try (Reader in = new FileReader(JogadorDAO.ARQUIVO);
-						BufferedReader buffer = new BufferedReader(in);
-						Writer out = new FileWriter(arquivoTemporario);
-						PrintWriter print = new PrintWriter(out)) {
-					String line = null;
-					String[] tokens = null;
-					String nome = null;
-					Integer num = null;
-					String str = null;
-					while ((line = buffer.readLine()) != null) {
-						tokens = line.split(";");
-						nome = tokens[0];
-						if ((nome.equals(this.jogador1.getNome()) == true) || (nome.equals(this.jogador2.getNome()) == true)) {
-							num = Integer.parseInt(tokens[3]);
-							++num;
-							str = tokens[0] + ";" + tokens[1] + ";" + tokens[2] + ";" + num;
-						} else {
-							str = tokens[0] + ";" + tokens[1] + ";" + tokens[2] + ";" + tokens[3];
-						}
-						print.println(str);
-					}
-				} catch (IOException e) {
-					throw new DAOException("Não foi possível ler a base de dados", e);
-				}
-
-				try {
-					JogadorDAO.this.copiarArquivo(arquivoTemporario, JogadorDAO.ARQUIVO);
-				} catch (IOException e) {
-					throw new DAOException("Não foi possível restaurar a base de dados", e);
-				}
-			} finally {
-				if (arquivoTemporario.exists() == true) {
-					arquivoTemporario.delete();
-				}
-			}
-		}
-	}
 
 	public static final String USE_HOME = System.getProperty("user.home");
 	public static final File DIRETORIO = new File(JogadorDAO.USE_HOME + File.separator + "files" + File.separator);
@@ -271,8 +102,16 @@ public class JogadorDAO implements JogoDaVelhaDAO {
 		if (jogador == null) {
 			throw new IllegalArgumentException("Argumento jogador nulo");
 		}
-		JogadorDAO.PontuacaoVencedor pv = new JogadorDAO.PontuacaoVencedor(jogador);
-		this.salvarPontuacao(pv);
+		this.salvarPontuacao((String s1, String s2) -> {
+					return s1.equals(s2);
+				}, 
+				(String[] array) -> {
+					int num = Integer.parseInt(array[1]);
+					++num;
+					String str = array[0] + ";" + num + ";" + array[2] + ";" + array[3];
+					return str;
+				}, 
+				jogador);
 	}
 
 	@Override
@@ -280,8 +119,17 @@ public class JogadorDAO implements JogoDaVelhaDAO {
 		if (jogador == null) {
 			throw new IllegalArgumentException("Argumento jogador nulo");
 		}
-		JogadorDAO.PontuacaoDerrotado pd = new JogadorDAO.PontuacaoDerrotado(jogador);
-		this.salvarPontuacao(pd);
+		
+		this.salvarPontuacao((String s1, String s2) -> {
+					return s1.equals(s2);
+				}, 
+				(String[] array) -> {
+					int num = Integer.parseInt(array[2]);
+					++num;
+					String str = array[0] + ";" + array[1] + ";" + num + ";" + array[3];
+					return str;
+				}, 
+				jogador);
 	}
 
 	@Override
@@ -291,22 +139,69 @@ public class JogadorDAO implements JogoDaVelhaDAO {
 		} else if (jogador2 == null) {
 			throw new IllegalArgumentException("Argumento jogador2 nulo");
 		}
-		JogadorDAO.PontuacaoEmpate pe = new JogadorDAO.PontuacaoEmpate(jogador1, jogador2);
-		this.salvarPontuacao(pe);
+		
+		this.salvarPontuacao((String s1, String s2) -> {
+					return s1.equals(s2);
+				}, 
+				(String[] array) -> {
+					int num = Integer.parseInt(array[3]);
+					++num;
+					String str = array[0] + ";" + array[1] + ";" + array[2] + ";" + num;
+					return str;
+				}, 
+				jogador1, jogador2);
 	}
-
-	private void salvarPontuacao(RegistradorResultado registrador) throws DAOException {
+	
+	private synchronized void salvarPontuacao(BiPredicate<String, String> predicate, Function<String[], String> function, Jogador... jogadores) throws DAOException {
 		try {
 			this.criarBaseDados();
 		} catch (IOException e) {
 			throw new DAOException("Não foi possivel criar um novo arquivo no sistema", e);
 		}
-
 		if (JogadorDAO.ARQUIVO.length() == 0) {
 			throw new DAOException("Base de dados vazia");
 		}
+		File arquivoTemporario = new File(JogadorDAO.DIRETORIO, "jogo_temp.txt");
+		try {
+			arquivoTemporario.createNewFile();
+		} catch (IOException e) {
+			throw new DAOException("Não foi possivel criar o arquivo temporário", e);
+		}
+		try {
+			try (Reader in = new FileReader(JogadorDAO.ARQUIVO);
+					BufferedReader buffer = new BufferedReader(in);
+					Writer out = new FileWriter(arquivoTemporario);
+					PrintWriter print = new PrintWriter(out)) {
+				String line = null;
+				String[] tokens = null;
+				String nome = null;
+				String str = null;
+				while ((line = buffer.readLine()) != null) {
+					tokens = line.split(";");
+					nome = tokens[0];
+					for (int i = 0; i < jogadores.length; i++) {
+						if (predicate.test(nome, jogadores[i].getNome()) == true) {
+							str = function.apply(tokens);
+						} else {
+							str = tokens[0] + ";" + tokens[1] + ";" + tokens[2] + ";" + tokens[3];
+						}
+						print.println(str);
+					}	
+				}
+			} catch (IOException e) {
+				throw new DAOException("Não foi possível ler a base de dados", e);
+			}
 
-		registrador.salvar();
+			try {
+				JogadorDAO.this.copiarArquivo(arquivoTemporario, JogadorDAO.ARQUIVO);
+			} catch (IOException e) {
+				throw new DAOException("Não foi possível restaurar a base de dados", e);
+			}
+		} finally {
+			if (arquivoTemporario.exists() == true) {
+				arquivoTemporario.delete();
+			}
+		}
 	}
 
 	private synchronized boolean criarBaseDados() throws IOException {
@@ -321,7 +216,7 @@ public class JogadorDAO implements JogoDaVelhaDAO {
 		return result;
 	}
 	
-	private void copiarArquivo(File fonte, File destino) throws IOException {
+	private synchronized void copiarArquivo(File fonte, File destino) throws IOException {
 		try (Reader in = new FileReader(fonte);
 				BufferedReader buffer = new BufferedReader(in);
 				Writer out = new FileWriter(destino);
