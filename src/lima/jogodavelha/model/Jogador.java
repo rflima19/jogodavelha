@@ -3,13 +3,15 @@ package lima.jogodavelha.model;
 import java.util.List;
 
 import lima.jogodavelha.DAO.JogadorDAO;
+import lima.jogodavelha.DAO.JogadorDataBaseDAO;
 import lima.jogodavelha.DAO.JogoDaVelhaDAO;
 import lima.jogodavelha.exceptions.DAOException;
 import lima.jogodavelha.utils.ValidadorNome;
 
 public class Jogador implements Comparable<Jogador> {
 
-	private static final JogoDaVelhaDAO REPOSITORIO = new JogadorDAO();;
+//	private static final JogoDaVelhaDAO REPOSITORIO = new JogadorDAO();
+	private static final JogoDaVelhaDAO REPOSITORIO = new JogadorDataBaseDAO();
 	
 	private String nome;
 	private int quantidadeVitorias;
