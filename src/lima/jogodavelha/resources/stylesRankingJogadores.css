@@ -1,0 +1,29 @@
+HBox {
+	-fx-padding: 10px;
+	-fx-alignment: center;
+}
+
+TableView {
+	-fx-padding: 10px;
+	-fx-background-insets: 10px;
+	-fx-background-color: transparent;
+}
+
+.table-view .placeholder .label {
+	-fx-text-fill: red;
+	-fx-padding:20px;
+}
+
+.table-view .column-header {
+	
+}
+
+.table-view .column-header .label {
+	-fx-font-weight: bold; 
+	-fx-alignment: center;
+}
+
+.table-view .cell:filled{
+	-fx-cell-size: 30;
+	-fx-alignment: center;
+}

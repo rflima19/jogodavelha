@@ -1,0 +1,21 @@
+Label {
+	-fx-font-size: 20px;
+	-fx-font-weight: bolder;
+	-fx-alignment: bottom-right;
+}
+
+TextField {
+	-fx-pref-height: 50px;
+	-fx-font-size: 20px;
+}
+
+HBox {
+	-fx-spacing: 20;
+	-fx-alignment: top-left;
+	-fx-padding: 10px;
+}
+
+BorderPane {
+	-fx-pref-height: 200px;
+	-fx-pref-width: 360px;
+}

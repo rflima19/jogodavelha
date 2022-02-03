@@ -1,0 +1,37 @@
+Label {
+	-fx-font-size: 20px;
+	-fx-font-weight: bolder;
+	-fx-alignment: bottom-right;
+}
+
+Text {
+	-fx-font-size: 20px;
+	-fx-font-weight: bolder;
+	-fx-alignment: center;
+	-fx-padding: 20px;
+}
+
+.dadosJogador {
+	-fx-font-size: 14px;
+}
+
+#txtMensagemJogo {
+	
+}
+
+TextField {
+	-fx-pref-height: 50px;
+	-fx-font-size: 20px;
+}
+
+HBox {
+	-fx-spacing: 10;
+	/*-fx-alignment: top-left;*/
+	-fx-padding: 10px;
+}
+
+VBox {
+	-fx-spacing: 10;
+	-fx-alignment: top-left;
+	-fx-padding: 10px;
+}

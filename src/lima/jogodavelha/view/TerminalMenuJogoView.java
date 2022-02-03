@@ -24,7 +24,7 @@ public class TerminalMenuJogoView {
 				
 				switch (opcao) {
 					case 1 -> {
-						new TerminalCadastroJogador().cadastrarJogador();
+						new TerminalCadastroJogadorView().cadastrarJogador();
 					}
 					case 2 -> {
 						new TerminalJogoView().iniciarJogo();

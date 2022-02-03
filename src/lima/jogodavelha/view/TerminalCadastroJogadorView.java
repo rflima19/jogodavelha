@@ -8,12 +8,12 @@ import lima.jogodavelha.facade.FacadeOfSystem;
 import lima.jogodavelha.utils.Console;
 import lima.jogodavelha.utils.TerminalUtils;
 
-public class TerminalCadastroJogador {
+public class TerminalCadastroJogadorView {
 
 	private TerminalUtils terminal;
 	private FacadeOfSystem facade;
 
-	public TerminalCadastroJogador() {
+	public TerminalCadastroJogadorView() {
 		super();
 		this.terminal = new TerminalUtils();
 		this.facade = FacadeConcrete.getFacade();
